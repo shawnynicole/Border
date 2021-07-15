@@ -17,6 +17,10 @@ public struct BorderCornerSet: ExpressibleByDictionaryLiteral {
     
     // MARK: - Static
     
+    public static var none: BorderCornerSet {
+        BorderCornerSet([:])
+    }
+    
     public static func all(radius: CGFloat = 0, color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderCornerSet {
         
         let corners: [Corner: BorderCorner] = [

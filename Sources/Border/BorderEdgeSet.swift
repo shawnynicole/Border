@@ -17,6 +17,10 @@ public struct BorderEdgeSet: ExpressibleByDictionaryLiteral {
     
     // MARK: - Static
     
+    public static var none: BorderEdgeSet {
+        BorderEdgeSet([:])
+    }
+    
     public static func all(color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderEdgeSet {
         
         let edges: [Edge: BorderEdge] = [
