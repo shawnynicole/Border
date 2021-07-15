@@ -2,7 +2,9 @@
 
 **Border** makes ease of creating solid and dotted borders with any corner radius, color, or line width in SwiftUI.
 
-![Demo Screenshot](../assets/screenshot.png?raw=true)
+<p align="center">
+<img src="../assets/screenshot.png?raw=true" alt="Screenshot" width="300" />
+</p>
 
 <p align="center">
     <a href="#requirements">Requirements</a> • <a href="#usage">Usage</a> • <a href="#installation">Installation</a> • <a href="#author">Author</a> • <a href="#license-mit">License</a>
