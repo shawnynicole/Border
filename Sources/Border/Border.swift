@@ -63,14 +63,24 @@ struct Border_Previews: PreviewProvider {
             .bottomTrailing: .bottomTrailing(radius: 20, color: .green, lineWidth: lineWidth)
         ]
         
-        let edges: [Edge: BorderEdge] = [
-            .top: .top(color: .orange, lineWidth: lineWidth, dotted: true),
-            .leading: .leading(color: .purple, lineWidth: lineWidth),
-            .trailing: .trailing(color: .yellow, lineWidth: lineWidth),
-            .bottom: .bottom(color: .blue, lineWidth: lineWidth, dotted: true)
-        ]
+//        let edges: [Edge: BorderEdge] = [
+//            .top: .top(color: .orange, lineWidth: lineWidth, dotted: true),
+//            .leading: .leading(color: .purple, lineWidth: lineWidth),
+//            .trailing: .trailing(color: .yellow, lineWidth: lineWidth),
+//            .bottom: .bottom(color: .blue, lineWidth: lineWidth, dotted: true)
+//        ]
         
-        return Border(corners: corners, edges: edges)
+        return Border(
+            corners: .init(corners),
+            edges:
+                .all(lineWidth: lineWidth)
+                .top(color: .orange, dotted: true)
+                .leading(color: .purple)
+                .trailing(color: .yellow)
+                .bottom(color: .blue, dotted: true)
+        )
+        
+//        return Border(corners: corners, edges: edges)
     }
 }
 
@@ -80,29 +90,27 @@ public struct Border: Shape {
     
     // MARK: - Stored Properties
     
-    private var corners: [Corner: BorderCorner] = [
-        .topLeading: .topLeading,
-        .topTrailing: .topTrailing,
-        .bottomLeading: .bottomLeading,
-        .bottomTrailing: .bottomTrailing
-    ]
-    
-    private var edges: [Edge: BorderEdge] = [
-        .top: .top,
-        .leading: .leading,
-        .trailing: .trailing,
-        .bottom: .bottom
-    ]
+    private var corners: BorderCornerSet = .all()
+    private var edges: BorderEdgeSet = .all()
     
     // MARK: - Init
     
     public init() { }
     
     public init(corners: [Corner: BorderCorner], edges: [Edge: BorderEdge]) {
-        self.corners = corners
+        self.corners = .init(corners)
         
         // Adjust the given edges based on the corners
         edges.forEach { (edge, borderEdge) in
+            self.edges[edge] = borderEdge.corners(corners: edgeCorners(borderEdge))
+        }
+    }
+    
+    public init(corners: BorderCornerSet, edges: BorderEdgeSet = .all()) {
+        self.corners = corners
+        
+        // Adjust the given edges based on the corners
+        edges.edges.forEach { (edge, borderEdge) in
             self.edges[edge] = borderEdge.corners(corners: edgeCorners(borderEdge))
         }
     }
