@@ -49,6 +49,34 @@ public struct BorderCornerSet: ExpressibleByDictionaryLiteral {
         BorderCornerSet([.bottomLeading: .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)])
     }
     
+    public static func top(radius: CGFloat = 0, color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderCornerSet {
+        BorderCornerSet([
+            .topLeading: .topLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted),
+            .topTrailing: .topTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        ])
+    }
+    
+    public static func trailing(radius: CGFloat = 0, color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderCornerSet {
+        BorderCornerSet([
+            .topTrailing: .topTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted),
+            .bottomTrailing: .bottomTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        ])
+    }
+    
+    public static func bottom(radius: CGFloat = 0, color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderCornerSet {
+        BorderCornerSet([
+            .bottomLeading: .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted),
+            .bottomTrailing: .bottomTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        ])
+    }
+    
+    public static func leading(radius: CGFloat = 0, color: Color = .black, lineWidth: CGFloat = 1, dotted: Bool = false) -> BorderCornerSet {
+        BorderCornerSet([
+            .topLeading: .topLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted),
+            .bottomLeading: .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        ])
+    }
+    
     // MARK: - Stored Properties
     
     public var corners: [Corner: BorderCorner]
@@ -110,6 +138,54 @@ public struct BorderCornerSet: ExpressibleByDictionaryLiteral {
         let color: Color = (color ?? current?.color) ?? .black
         let lineWidth: CGFloat = (lineWidth ?? current?.lineWidth) ?? 1
         let dotted: Bool = (dotted ?? current?.dotted) ?? false
+        corners[.bottomLeading] = .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        return BorderCornerSet(corners)
+    }
+    
+    public func top(radius: CGFloat? = nil, color: Color? = nil, lineWidth: CGFloat? = nil, dotted: Bool? = nil) -> BorderCornerSet {
+        var corners = self.corners
+        let current = corners[.topLeading]
+        let radius: CGFloat = (radius ?? current?.radius) ?? 0
+        let color: Color = (color ?? current?.color) ?? .black
+        let lineWidth: CGFloat = (lineWidth ?? current?.lineWidth) ?? 1
+        let dotted: Bool = (dotted ?? current?.dotted) ?? false
+        corners[.topLeading] = .topLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        corners[.topTrailing] = .topTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        return BorderCornerSet(corners)
+    }
+    
+    public func trailing(radius: CGFloat? = nil, color: Color? = nil, lineWidth: CGFloat? = nil, dotted: Bool? = nil) -> BorderCornerSet {
+        var corners = self.corners
+        let current = corners[.topTrailing]
+        let radius: CGFloat = (radius ?? current?.radius) ?? 0
+        let color: Color = (color ?? current?.color) ?? .black
+        let lineWidth: CGFloat = (lineWidth ?? current?.lineWidth) ?? 1
+        let dotted: Bool = (dotted ?? current?.dotted) ?? false
+        corners[.topTrailing] = .topTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        corners[.bottomTrailing] = .bottomTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        return BorderCornerSet(corners)
+    }
+    
+    public func bottom(radius: CGFloat? = nil, color: Color? = nil, lineWidth: CGFloat? = nil, dotted: Bool? = nil) -> BorderCornerSet {
+        var corners = self.corners
+        let current = corners[.bottomTrailing]
+        let radius: CGFloat = (radius ?? current?.radius) ?? 0
+        let color: Color = (color ?? current?.color) ?? .black
+        let lineWidth: CGFloat = (lineWidth ?? current?.lineWidth) ?? 1
+        let dotted: Bool = (dotted ?? current?.dotted) ?? false
+        corners[.bottomLeading] = .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        corners[.bottomTrailing] = .bottomTrailing(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
+        return BorderCornerSet(corners)
+    }
+    
+    public func leading(radius: CGFloat? = nil, color: Color? = nil, lineWidth: CGFloat? = nil, dotted: Bool? = nil) -> BorderCornerSet {
+        var corners = self.corners
+        let current = corners[.bottomLeading]
+        let radius: CGFloat = (radius ?? current?.radius) ?? 0
+        let color: Color = (color ?? current?.color) ?? .black
+        let lineWidth: CGFloat = (lineWidth ?? current?.lineWidth) ?? 1
+        let dotted: Bool = (dotted ?? current?.dotted) ?? false
+        corners[.topLeading] = .topLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
         corners[.bottomLeading] = .bottomLeading(radius: radius, color: color, lineWidth: lineWidth, dotted: dotted)
         return BorderCornerSet(corners)
     }
